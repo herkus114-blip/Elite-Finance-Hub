@@ -1,0 +1,171 @@
+[12:12 am, 23/06/2026] Herkus: Build a world-class, investor-grade fintech platform prototype called “Nexus Settlement Network”.
+
+This is NOT a consumer banking app.
+
+This is an institutional financial infrastructure platform intended for demonstrations to sovereign wealth funds, family offices, institutional investors, banks, investment groups, government entities and strategic partners.
+
+The application must look significantly more advanced, premium and trustworthy than Revolut, Wise, Stripe, Coinbase Institutional and traditional banking platforms.
+
+DESIGN PHILOSOPHY
+
+The product should immediately communicate:
+
+* Trust
+* Scale
+* Innovation
+* Regulatory readiness
+* Institutional credibility
+* Global reach
+* Financial sophistication
+
+The design quality should resemble a company valued at over …
+[1:03 am, 23/06/2026] Herkus: Update the existing Elite Settlement Network platform.
+
+DO NOT redesign the UI.
+
+DO NOT remove any existing functionality.
+
+Only enhance the existing Settlement Network and Deposit Network modules.
+
+========================================
+
+SETTLEMENT NETWORK ENHANCEMENTS
+
+========================================
+
+Expand the “Initiate Settlement” institution selection dropdowns.
+
+Keep all existing institutions and add the following institutions as available sender and receiver options:
+
+* Goldman Sachs
+* HSBC
+* DBS
+* JPMorgan Chase
+* Deutsche Bank
+* Santander
+* State Street
+* CACEIS Investor Services
+* Vontobel
+* Swissquote
+* Credit Suisse
+* Türkiye İş Bankası
+* Capital Union Bank
+* Misyon
+* Arab Bank
+* Zand Bank
+* Sygnum Bank
+* Banque Delubac & Cie
+* Hypothekarbank Lenzburg
+* AMINA Bank
+* Pictet
+* Emirates NBD
+* First Abu Dhabi Bank (FAB)
+* Abu Dhabi Commercial Bank (ADCB)
+* Qatar National Bank (QNB)
+
+Add a searchable institution selector.
+
+Group institutions by region:
+
+North America
+Europe
+Middle East
+Asia-Pacific
+
+Update settlement statistics and network visualizations to reflect a larger institutional network.
+
+Increase connected institutions count accordingly.
+
+Ensure these institutions appear throughout:
+
+* Settlement routing
+* Settlement history
+* Network activity feed
+* Settlement corridors
+* Global settlement network visualizations
+
+Generate realistic demo settlement activity using all institutions.
+
+========================================
+
+DEPOSIT NETWORK ENHANCEMENTS
+
+========================================
+
+Current issuers include:
+
+* JPMorgan Chase
+* Societe Generale
+* Standard Chartered
+* Barclays
+
+Keep all existing issuers and add:
+
+* Deutsche Bank
+* Santander
+* State Street
+* Vontobel
+* Swissquote
+* Credit Suisse
+* Arab Bank
+* Zand Bank
+* Sygnum Bank
+* AMINA Bank
+* Pictet
+* Capital Union Bank
+* Emirates NBD
+* First Abu Dhabi Bank (FAB)
+* Abu Dhabi Commercial Bank (ADCB)
+* Qatar National Bank (QNB)
+
+Update both:
+
+* Recent Issuances
+* Recent Redemptions
+
+Generate at least:
+
+* 25 issuance records
+* 25 redemption records
+
+Use realistic institutional activity.
+
+Currencies should include:
+
+* USD
+* EUR
+* GBP
+* CHF
+* AED
+* SGD
+
+Display:
+
+* Institution name
+* Deposit token identifier
+* Currency
+* Amount
+* Timestamp
+* Settlement status
+
+========================================
+
+INVESTOR DEMO IMPROVEMENTS
+
+========================================
+
+Make the platform feel like a global institutional settlement network.
+
+Increase visible institutional participation throughout the platform.
+
+Use the added institutions in:
+
+* Activity feeds
+* Settlement examples
+* Deposit issuance examples
+* Analytics dashboards
+* Network statistics
+
+The platform should demonstrate a global network of major banking and financial institutions suitable for presentations to institutional investors, sovereign wealth funds and strategic partners.
+
+Preserve the current design language and styling while adding the new institutions and realistic demo activity.
