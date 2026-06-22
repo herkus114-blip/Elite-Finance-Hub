@@ -1,22 +1,37 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Elite Settlement Network API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: dashboard
+    description: Executive Command Center metrics
+  - name: assets
+    description: RWA Tokenization Platform
+  - name: ai
+    description: AI Valuation & Rating Engine
+  - name: treasury
+    description: Treasury Tokenization Platform
+  - name: settlement
+    description: Global Bank Settlement Network
+  - name: deposits
+    description: Tokenized Deposit Network
+  - name: gateway
+    description: Fiat-Crypto-Tokenized Deposit Gateway
+  - name: demo
+    description: Investor Demo Mode
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +39,835 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /dashboard/metrics:
+    get:
+      operationId: getDashboardMetrics
+      tags: [dashboard]
+      summary: Get executive command center KPIs
+      responses:
+        "200":
+          description: Dashboard metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardMetrics"
+
+  /dashboard/market-activity:
+    get:
+      operationId: getMarketActivity
+      tags: [dashboard]
+      summary: Get live market activity feed
+      responses:
+        "200":
+          description: Market activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MarketEvent"
+
+  /assets:
+    get:
+      operationId: listAssets
+      tags: [assets]
+      summary: List all tokenized RWA assets
+      parameters:
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of assets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Asset"
+    post:
+      operationId: tokenizeAsset
+      tags: [assets]
+      summary: Submit an asset for tokenization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AssetInput"
+      responses:
+        "201":
+          description: Asset created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+
+  /assets/{id}:
+    get:
+      operationId: getAsset
+      tags: [assets]
+      summary: Get a specific asset
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Asset detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Asset"
+
+  /ai/analyze/{assetId}:
+    get:
+      operationId: getAiAnalysis
+      tags: [ai]
+      summary: Get AI valuation and risk analysis for an asset
+      parameters:
+        - name: assetId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: AI analysis report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AiAnalysis"
+
+  /ai/market-forecast:
+    get:
+      operationId: getMarketForecast
+      tags: [ai]
+      summary: Get AI market forecast and intelligence
+      responses:
+        "200":
+          description: Market forecast
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MarketForecast"
+
+  /treasury/products:
+    get:
+      operationId: listTreasuryProducts
+      tags: [treasury]
+      summary: List treasury products in marketplace
+      responses:
+        "200":
+          description: Treasury products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TreasuryProduct"
+    post:
+      operationId: issueTreasury
+      tags: [treasury]
+      summary: Issue a new treasury bond/product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TreasuryInput"
+      responses:
+        "201":
+          description: Treasury issued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TreasuryProduct"
+
+  /treasury/analytics:
+    get:
+      operationId: getTreasuryAnalytics
+      tags: [treasury]
+      summary: Get yield and portfolio analytics
+      responses:
+        "200":
+          description: Treasury analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TreasuryAnalytics"
+
+  /settlement/network:
+    get:
+      operationId: getSettlementNetwork
+      tags: [settlement]
+      summary: Get global bank settlement network topology
+      responses:
+        "200":
+          description: Network topology with institutions and routes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettlementNetwork"
+
+  /settlement/transactions:
+    get:
+      operationId: listSettlementTransactions
+      tags: [settlement]
+      summary: List recent cross-border settlement transactions
+      responses:
+        "200":
+          description: Settlement transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SettlementTransaction"
+    post:
+      operationId: initiateSettlement
+      tags: [settlement]
+      summary: Initiate a cross-border settlement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SettlementInput"
+      responses:
+        "201":
+          description: Settlement initiated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SettlementTransaction"
+
+  /deposits/pools:
+    get:
+      operationId: listDepositPools
+      tags: [deposits]
+      summary: List tokenized deposit liquidity pools
+      responses:
+        "200":
+          description: Deposit pools
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DepositPool"
+
+  /deposits/issuances:
+    get:
+      operationId: listDepositIssuances
+      tags: [deposits]
+      summary: List recent deposit issuances
+      responses:
+        "200":
+          description: Issuances
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DepositIssuance"
+    post:
+      operationId: issueDeposit
+      tags: [deposits]
+      summary: Issue a new tokenized deposit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DepositIssuanceInput"
+      responses:
+        "201":
+          description: Deposit issued
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DepositIssuance"
+
+  /gateway/convert:
+    post:
+      operationId: initiateConversion
+      tags: [gateway]
+      summary: Initiate a fiat/crypto/tokenized deposit conversion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConversionInput"
+      responses:
+        "201":
+          description: Conversion transaction
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConversionTransaction"
+
+  /gateway/transactions:
+    get:
+      operationId: listGatewayTransactions
+      tags: [gateway]
+      summary: List recent gateway conversion transactions
+      responses:
+        "200":
+          description: Gateway transactions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ConversionTransaction"
+
+  /demo/steps:
+    get:
+      operationId: getDemoSteps
+      tags: [demo]
+      summary: Get investor demo presentation steps
+      responses:
+        "200":
+          description: Demo steps
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DemoStep"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    DashboardMetrics:
+      type: object
+      required: [totalTokenizedAssets, totalTreasuryAssets, dailySettlementVolume, connectedInstitutions, globalLiquidityIndex, aiConfidenceScore, totalRevenue, activeCorridors, networkUptime, transactionsToday]
+      properties:
+        totalTokenizedAssets:
+          type: number
+        totalTreasuryAssets:
+          type: number
+        dailySettlementVolume:
+          type: number
+        connectedInstitutions:
+          type: integer
+        globalLiquidityIndex:
+          type: number
+        aiConfidenceScore:
+          type: number
+        totalRevenue:
+          type: number
+        activeCorridors:
+          type: integer
+        networkUptime:
+          type: number
+        transactionsToday:
+          type: integer
+        revenueChange:
+          type: number
+        volumeChange:
+          type: number
+        institutionsChange:
+          type: integer
+
+    MarketEvent:
+      type: object
+      required: [id, type, description, amount, currency, timestamp, status]
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        timestamp:
+          type: string
+        status:
+          type: string
+        institution:
+          type: string
+
+    Asset:
+      type: object
+      required: [id, name, category, valuation, currency, aiRiskScore, aiConfidence, liquidityRating, marketDemand, status, tokenSymbol, totalTokens, availableTokens]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        valuation:
+          type: number
+        currency:
+          type: string
+        aiRiskScore:
+          type: number
+        aiConfidence:
+          type: number
+        liquidityRating:
+          type: string
+        marketDemand:
+          type: string
+        status:
+          type: string
+        tokenSymbol:
+          type: string
+        totalTokens:
+          type: integer
+        availableTokens:
+          type: integer
+        location:
+          type: string
+        description:
+          type: string
+        historicalReturn:
+          type: number
+        yieldRate:
+          type: number
+
+    AssetInput:
+      type: object
+      required: [name, category, valuation, currency]
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        valuation:
+          type: number
+        currency:
+          type: string
+        location:
+          type: string
+        description:
+          type: string
+
+    AiAnalysis:
+      type: object
+      required: [assetId, overallScore, riskScore, liquidityScore, fraudRisk, marketSentiment, recommendation, insights, priceTarget, confidence]
+      properties:
+        assetId:
+          type: string
+        overallScore:
+          type: number
+        riskScore:
+          type: number
+        liquidityScore:
+          type: number
+        fraudRisk:
+          type: number
+        marketSentiment:
+          type: string
+        recommendation:
+          type: string
+        insights:
+          type: array
+          items:
+            type: string
+        priceTarget:
+          type: number
+        confidence:
+          type: number
+        riskFactors:
+          type: array
+          items:
+            type: string
+        generatedAt:
+          type: string
+
+    MarketForecast:
+      type: object
+      required: [period, globalLiquidityTrend, rwaGrowthForecast, settlementVolumeProjection, topOpportunities, riskAlerts, generatedAt]
+      properties:
+        period:
+          type: string
+        globalLiquidityTrend:
+          type: string
+        rwaGrowthForecast:
+          type: number
+        settlementVolumeProjection:
+          type: number
+        topOpportunities:
+          type: array
+          items:
+            type: string
+        riskAlerts:
+          type: array
+          items:
+            type: string
+        generatedAt:
+          type: string
+
+    TreasuryProduct:
+      type: object
+      required: [id, name, type, issuer, faceValue, currency, yieldRate, maturityDate, rating, status, totalIssuance, availableAllocation, settlementDays]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        issuer:
+          type: string
+        faceValue:
+          type: number
+        currency:
+          type: string
+        yieldRate:
+          type: number
+        maturityDate:
+          type: string
+        rating:
+          type: string
+        status:
+          type: string
+        totalIssuance:
+          type: number
+        availableAllocation:
+          type: number
+        settlementDays:
+          type: integer
+        description:
+          type: string
+
+    TreasuryInput:
+      type: object
+      required: [name, type, issuer, faceValue, currency, yieldRate, maturityDate]
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        issuer:
+          type: string
+        faceValue:
+          type: number
+        currency:
+          type: string
+        yieldRate:
+          type: number
+        maturityDate:
+          type: string
+        totalIssuance:
+          type: number
+        description:
+          type: string
+
+    TreasuryAnalytics:
+      type: object
+      required: [totalPortfolioValue, weightedAverageYield, durationRisk, maturingIn30Days, maturingIn90Days, topHolders, yieldCurve]
+      properties:
+        totalPortfolioValue:
+          type: number
+        weightedAverageYield:
+          type: number
+        durationRisk:
+          type: number
+        maturingIn30Days:
+          type: number
+        maturingIn90Days:
+          type: number
+        topHolders:
+          type: array
+          items:
+            $ref: "#/components/schemas/TreasuryHolder"
+        yieldCurve:
+          type: array
+          items:
+            $ref: "#/components/schemas/YieldPoint"
+
+    TreasuryHolder:
+      type: object
+      required: [name, allocation, percentage]
+      properties:
+        name:
+          type: string
+        allocation:
+          type: number
+        percentage:
+          type: number
+
+    YieldPoint:
+      type: object
+      required: [maturity, yield]
+      properties:
+        maturity:
+          type: string
+        yield:
+          type: number
+
+    SettlementNetwork:
+      type: object
+      required: [institutions, corridors, totalDailyVolume, activeSettlements]
+      properties:
+        institutions:
+          type: array
+          items:
+            $ref: "#/components/schemas/BankingInstitution"
+        corridors:
+          type: array
+          items:
+            $ref: "#/components/schemas/SettlementCorridor"
+        totalDailyVolume:
+          type: number
+        activeSettlements:
+          type: integer
+
+    BankingInstitution:
+      type: object
+      required: [id, name, country, lat, lng, type, tier, dailyVolume, status]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        country:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+        type:
+          type: string
+        tier:
+          type: integer
+        dailyVolume:
+          type: number
+        status:
+          type: string
+        swiftCode:
+          type: string
+
+    SettlementCorridor:
+      type: object
+      required: [id, fromId, toId, dailyVolume, currency, avgSettlementTime, status]
+      properties:
+        id:
+          type: string
+        fromId:
+          type: string
+        toId:
+          type: string
+        dailyVolume:
+          type: number
+        currency:
+          type: string
+        avgSettlementTime:
+          type: number
+        status:
+          type: string
+
+    SettlementTransaction:
+      type: object
+      required: [id, fromInstitution, toInstitution, amount, currency, status, initiatedAt, settlementTime, corridor, transactionRef]
+      properties:
+        id:
+          type: string
+        fromInstitution:
+          type: string
+        toInstitution:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+        initiatedAt:
+          type: string
+        completedAt:
+          type: ["string", "null"]
+        settlementTime:
+          type: number
+        corridor:
+          type: string
+        transactionRef:
+          type: string
+
+    SettlementInput:
+      type: object
+      required: [fromInstitutionId, toInstitutionId, amount, currency]
+      properties:
+        fromInstitutionId:
+          type: string
+        toInstitutionId:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+
+    DepositPool:
+      type: object
+      required: [id, name, currency, totalLiquidity, utilization, apy, participantCount, status, riskTier]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        currency:
+          type: string
+        totalLiquidity:
+          type: number
+        utilization:
+          type: number
+        apy:
+          type: number
+        participantCount:
+          type: integer
+        status:
+          type: string
+        riskTier:
+          type: string
+        supportedRails:
+          type: array
+          items:
+            type: string
+
+    DepositIssuance:
+      type: object
+      required: [id, issuer, amount, currency, tokenSymbol, status, issuedAt, settlementRail, confirmations]
+      properties:
+        id:
+          type: string
+        issuer:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        tokenSymbol:
+          type: string
+        status:
+          type: string
+        issuedAt:
+          type: string
+        settledAt:
+          type: ["string", "null"]
+        settlementRail:
+          type: string
+        confirmations:
+          type: integer
+        poolId:
+          type: string
+
+    DepositIssuanceInput:
+      type: object
+      required: [issuer, amount, currency, poolId, settlementRail]
+      properties:
+        issuer:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        poolId:
+          type: string
+        settlementRail:
+          type: string
+
+    ConversionTransaction:
+      type: object
+      required: [id, fromType, toType, fromCurrency, toCurrency, fromAmount, toAmount, exchangeRate, status, initiatedAt, complianceStatus, steps]
+      properties:
+        id:
+          type: string
+        fromType:
+          type: string
+        toType:
+          type: string
+        fromCurrency:
+          type: string
+        toCurrency:
+          type: string
+        fromAmount:
+          type: number
+        toAmount:
+          type: number
+        exchangeRate:
+          type: number
+        status:
+          type: string
+        initiatedAt:
+          type: string
+        completedAt:
+          type: ["string", "null"]
+        complianceStatus:
+          type: string
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/ConversionStep"
+        fees:
+          type: number
+        routingPath:
+          type: string
+
+    ConversionStep:
+      type: object
+      required: [step, label, status, timestamp]
+      properties:
+        step:
+          type: integer
+        label:
+          type: string
+        status:
+          type: string
+        timestamp:
+          type: ["string", "null"]
+
+    ConversionInput:
+      type: object
+      required: [fromType, toType, fromCurrency, toCurrency, fromAmount]
+      properties:
+        fromType:
+          type: string
+        toType:
+          type: string
+        fromCurrency:
+          type: string
+        toCurrency:
+          type: string
+        fromAmount:
+          type: number
+
+    DemoStep:
+      type: object
+      required: [id, order, title, subtitle, route, duration]
+      properties:
+        id:
+          type: string
+        order:
+          type: integer
+        title:
+          type: string
+        subtitle:
+          type: string
+        route:
+          type: string
+        duration:
+          type: integer
+        description:
+          type: string
