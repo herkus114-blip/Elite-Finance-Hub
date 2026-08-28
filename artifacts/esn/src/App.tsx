@@ -27,7 +27,8 @@ const queryClient = new QueryClient({
   },
 });
 
-const DEMO_PASSWORD = "ESN-SUPER-APP";
+const DEMO_PASSWORD = "ESN-SUPER-APP-V4.2.0";
+const ACCESS_STORAGE_KEY = "esn_demo_access_v4_2_0";
 
 function AccessGate({ onAccess }: { onAccess: () => void }) {
   const [password, setPassword] = useState("");
@@ -35,7 +36,7 @@ function AccessGate({ onAccess }: { onAccess: () => void }) {
 
   const handleAccess = () => {
     if (password === DEMO_PASSWORD) {
-      sessionStorage.setItem("esn_demo_access", "granted");
+      sessionStorage.setItem(ACCESS_STORAGE_KEY, "granted");
       onAccess();
     } else {
       setError("Incorrect password. Please try again.");
@@ -77,11 +78,7 @@ function AccessGate({ onAccess }: { onAccess: () => void }) {
             "0 0 0 1px rgba(14,165,233,0.04), 0 20px 60px rgba(0,0,0,0.45)",
         }}
       >
-        <div
-          style={{
-            textAlign: "center",
-          }}
-        >
+        <div style={{ textAlign: "center" }}>
           <h1
             style={{
               margin: "0 0 22px 0",
@@ -193,16 +190,14 @@ function Router() {
 
 function App() {
   const [hasAccess, setHasAccess] = useState(() => {
-    return sessionStorage.getItem("esn_demo_access") === "granted";
+    return sessionStorage.getItem(ACCESS_STORAGE_KEY) === "granted";
   });
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider defaultTheme="dark" storageKey="esn-theme">
         <TooltipProvider>
-          <WouterRouter
-            base={import.meta.env.BASE_URL.replace(/\/$/, "")}
-          >
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
             {hasAccess ? (
               <Router />
             ) : (
